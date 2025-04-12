@@ -23,8 +23,11 @@ Perguntas relacionadas à distribuição dos tipos ou categorias de crime nos di
 
 ## Evidências em vídeo
 Links para o Google Drive:
+
 [01_ingestao_bronze](https://drive.google.com/file/d/1i5HpQJtn6S74o4cFOrnMvVxkmsFLyJas/view?usp=share_link)
+
 [02_tratamento_silver](https://drive.google.com/file/d/1GY3jBq1n1RrtVpbHidxarkgD04xVUhBP/view?usp=share_link)
+
 03_analise_gold
 
 ## Sobre os Dados

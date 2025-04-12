@@ -21,6 +21,12 @@ Perguntas relacionadas à distribuição dos tipos ou categorias de crime nos di
 - Qual a distribuição geográfica das categorias de crime dentro de cada município?
 - Qual a taxa de registro a cada 100 mil habitantes das 3 maiores categorias de crime de cada município?
 
+## Evidências em vídeo
+Links para o Google Drive:
+[01_ingestao_bronze](https://drive.google.com/file/d/1i5HpQJtn6S74o4cFOrnMvVxkmsFLyJas/view?usp=share_link)
+[02_tratamento_silver](https://drive.google.com/file/d/1GY3jBq1n1RrtVpbHidxarkgD04xVUhBP/view?usp=share_link)
+03_analise_gold
+
 ## Sobre os Dados
 
 Neste trabalho vamos processar os dados abertos de crimes do estado de São Paulo, dos anos de 2022, 2023 e 2024, disponibilizados no portal de transparência do estado, complementados pelo dicionário de dados fornecido pela Secretaria de Segurança Pública do estado de São Paulo.

@@ -21,14 +21,8 @@ Perguntas relacionadas à distribuição dos tipos ou categorias de crime nos di
 - Qual a distribuição geográfica das categorias de crime dentro de cada município?
 - Qual a taxa de registro a cada 100 mil habitantes das 3 maiores categorias de crime de cada município?
 
-## Evidências em vídeo
-Links para o Google Drive:
-
-[01_ingestao_bronze](https://drive.google.com/file/d/1i5HpQJtn6S74o4cFOrnMvVxkmsFLyJas/view?usp=share_link)
-
-[02_tratamento_silver](https://drive.google.com/file/d/1GY3jBq1n1RrtVpbHidxarkgD04xVUhBP/view?usp=share_link)
-
-03_analise_gold
+## Evidências em imagens no arquivo PDF
+[Evidências no GitHub]()
 
 ## Sobre os Dados
 
@@ -38,11 +32,9 @@ Os dados completos podem ser encontrados na aba de [estatísticas](https://www.s
 
 Quanto ao dicionário de dados, como eu já tinha a intenção de analisar esses dados e por esses dados serem oficiais do estado de São Paulo, solicitei no portal [Fala SP](https://fala.sp.gov.br/) informações sobre todos os atributos contidos neles.
 
-### Estrutura dos dados:
+## Modelagem dos dados
 
-- `df_bronze`: Dados brutos, conforme disponibilizados
-- `df_silver`: Dados tratados e estruturados para análise
-- `df_gold`: Dados prontos para visualização e resposta às perguntas
+O modelo dimensional adotado neste projeto segue a estrutura clássica de estrela, uma abordagem comum em soluções de engenharia de dados voltadas para análise. Nesse modelo, os dados transacionais ficam concentrados em uma tabela fato (neste caso, a fato_boletim_ocorrencia, `fato_bo`), enquanto os atributos descritivos são organizados em tabelas dimensão, como `dim_tempo`, `dim_municipio` e `dim_crime`. Essa separação permite consultas analíticas rápidas, reduz a redundância e facilita a criação de relatórios, dashboards e visualizações orientadas a múltiplos eixos (tempo, localização e natureza criminal). A modelagem estrela foi escolhida por sua clareza, escalabilidade e compatibilidade com ferramentas de BI e ambientes de consulta SQL.
 
 ## Estrutura do Projeto
 
@@ -76,32 +68,42 @@ Apesar disso, considero este trabalho um avanço significativo em relação à a
 
 ## Catálogo de Dados
 
-### `df_gold`
-
-| Coluna         | Tipo     | Descrição                                                                 | Domínio / Valores esperados                                                                 |
-|----------------|----------|---------------------------------------------------------------------------|----------------------------------------------------------------------------------------------|
-| `ano`          | Integer  | Ano de ocorrência do BO                                                   | 2022, 2023, 2024                                                                             |
-| `mes`          | Integer  | Mês de ocorrência do BO                                                   | 1 a 12                                                                                       |
-| `latitude`     | Double   | Latitude do local do crime                                                | Pode conter valores ausentes (374.713 vazios)                                               |
-| `longitude`    | Double   | Longitude do local do crime                                               | Pode conter valores ausentes (374.712 vazios)                                               |
-| `id_bo`        | String   | Identificador único criado para cada BO                                   | Sem repetições; identificador interno, não oficial                                           |
-| `natureza`     | String   | Natureza apurada do crime segundo publicação oficial                      | 24 categorias únicas, valores textuais padronizados                                          |
-| `municipio`    | String   | Nome do município onde ocorreu o crime                                    | 645 nomes únicos, todos em minúsculas, sem acento ou caracteres especiais (normalizados)    |
-| `categoria`    | String   | Agrupamento de crimes definido pelo autor do projeto                      | 8 categorias únicas                                                                         |
-| `tipo_crime`   | String   | Classificação mais ampla segundo o Código Penal                           | 7 classificações únicas, abrangentes, oficialmente definidas                                 |
+### `fato_bo`
+| Coluna         | Tipo     | Descrição                                                                 |
+|----------------|----------|---------------------------------------------------------------------------
+| `id_bo`          | String  | Identificador único do boletim de ocorrência (chave primária)            |
+| `id_tempo`          | Integer  | Chave estrangeira para a dimensão tempo                              | 
+| `codigo_ibge`     | Integer   | Latitude do local do crime                                             |  
+| `id_crime`    | String   | Chave estrangeira para a dimensão crime                                      | 
+| `latitude`        | Double   | Identificador único criado para cada BO                                 |
+| `longitude`     | Double   | Natureza apurada do crime segundo publicação oficial                      |
 
 ---
 
-### `df_municipio`
+### `dim_tempo`
+| Coluna         | Tipo     | Descrição                                                                 |
+|----------------|----------|---------------------------------------------------------------------------
+| `id_tempo`          | Integer  | Identificador único do tempo          |
+| `ano`          | Integer  | Ano do registro                              | 
+| `mes`     | Integer   | Mês do registro                                             |  
 
-| Coluna            | Tipo     | Descrição                                                                                      | Domínio / Observações                                                                 |
-|-------------------|----------|------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------|
-| `municipio`       | String   | Nome do município                                                                               | 645 municípios, nomes normalizados (minúsculas, sem acento ou caractere especial)     |
-| `codigo_ibge`     | Integer  | Código IBGE oficial do município                                                               | Completo para todos os municípios                                                     |
-| `taxa_100k_22`    | Double   | Taxa de BOs por 100 mil habitantes em 2022                                                     | Calculada com total de BOs de 2022 dividido pela população_22                         |
-| `taxa_100k_23`    | Double   | Taxa de BOs por 100 mil habitantes em 2023                                                     | Calculada com total de BOs de 2023 dividido pela população_23                         |
-| `taxa_100k_24`    | Double   | Taxa de BOs por 100 mil habitantes em 2024                                                     | Calculada com total de BOs de 2024 dividido pela população_24                         |
-| `populacao_22`    | Integer  | População oficial do município em 2022, segundo o Censo                                        | Fonte: IBGE                                                                            |
-| `populacao_23`    | Double   | Estimativa da população em 2023, calculada como média de 2022 e 2024                          | Cálculo próprio a partir das populações oficial e estimada                            |
-| `populacao_24`    | Integer  | Estimativa oficial da população em 2024, segundo o IBGE                                        | Fonte: IBGE                                                                            |
+---
 
+### `dim_municipio`
+| Coluna         | Tipo     | Descrição                                                                 |
+|----------------|----------|---------------------------------------------------------------------------
+| `municipio`          | String  | Nome do município (normalizado, sem acentos)      |
+| `codigo_ibge`          | Integer  | Código oficial IBGE do município (chave primária)           | 
+| `pop_censo_22`     | Integer   | População do censo de 2022                                            |  
+| `pop_estimada_23`          | Float  | População estimada para 2023          |
+| `pop_estimada_24`          | Integer  | População estimada para 2024                              | 
+
+---
+
+### `dim_crime`
+| Coluna         | Tipo     | Descrição                                                                 |
+|----------------|----------|---------------------------------------------------------------------------
+| `id_crime`          | String  | Identificador único do tipo de crime      |
+| `natureza`          | String  | Natureza apurada do crime (conforme boletim oficial)           | 
+| `categoria`     | String   | Categoria agregada de crime definida no projeto                                 |  
+| `tipo_crime`          | String  | Classificação ampla conforme Código Penal          |

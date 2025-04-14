@@ -38,9 +38,9 @@ O modelo dimensional adotado neste projeto segue a estrutura clássica de estrel
 
 ## Estrutura do Projeto
 
-- `01_ingestao_bronze.ipynb`: Pipeline de carga e estruturação inicial dos dados
-- `02_tratamento_silver.ipynb`: Tratamento de inconsistências, limpeza e enriquecimento
-- `03_analise_gold.ipynb`: Análises, visualizações e discussão dos resultados
+- `01_ingestao_bronze.ipynb`: Pipeline de carga e estruturação inicial dos dados, link do Databricks [aqui](https://databricks-prod-cloudfront.cloud.databricks.com/public/4027ec902e239c93eaaa8714f173bcfc/3811145726725248/3094996477823788/5963056565390150/latest.html)
+- `02_tratamento_silver.ipynb`: Tratamento de inconsistências, limpeza e enriquecimento, link do Databricks [aqui](https://databricks-prod-cloudfront.cloud.databricks.com/public/4027ec902e239c93eaaa8714f173bcfc/3811145726725248/2953575381780261/5963056565390150/latest.html)
+- `03_analise_gold.ipynb`: Análises, visualizações e discussão dos resultados, link do Databricks [aqui](https://databricks-prod-cloudfront.cloud.databricks.com/public/4027ec902e239c93eaaa8714f173bcfc/3811145726725248/3450117763868196/5963056565390150/latest.html)
 
 ## Tecnologias Utilizadas
 
